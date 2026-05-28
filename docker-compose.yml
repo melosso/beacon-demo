@@ -2,8 +2,6 @@ services:
   beacon:
     build: .
     restart: unless-stopped
-    networks:
-      - beacon_network
     user: "1000:1000"       # Runs as non-root (Ensure /app/data is chown'd to 1000:1000)
     read_only: true         # Makes container filesystem read-only
     cap_drop:
