@@ -1,28 +1,30 @@
 services:
   beacon:
     build: .
+    restart: unless-stopped
+    networks:
+      - beacon_network
+    user: "1000:1000"       # Runs as non-root (Ensure /app/data is chown'd to 1000:1000)
+    read_only: true         # Makes container filesystem read-only
+    cap_drop:
+      - ALL                 # Drops all Linux kernel capabilities
+    security_opt:
+      - no-new-privileges:true # Prevents processes from gaining extra privileges
     ports:
       - "5010:5000"  # Public API
       - "5011:5001"  # Admin panel
     volumes:
       - beacon_data:/app/data
     environment:
-      # Core settings (required)
       - Beacon__SigningKey=${BEACON_SIGNING_KEY}
       - Beacon__EncryptionKey=${BEACON_ENCRYPTION_KEY}
       - Beacon__Pepper=${BEACON_PEPPER}
-      - Beacon__AdminApiKey=Beacon-Api-Key
+      - Beacon__AdminApiKey=${BEACON_ADMIN_API_KEY}
       - Beacon__ConnectionString=Data Source=/app/data/Beacon.db
-
-      # Demo
       - Beacon__DisableEmailNotifications=true
       - Beacon__UserAuthentication=
-
-      # Port-based routing (default, no reverse proxy)
       - Beacon__ApiPort=5000
       - Beacon__AdminPort=5001
-
-      # Host-based routing (for reverse proxy deployments)
       - Beacon__ApiHosts=beacon-demo-api.melosso.com
       - Beacon__AdminHosts=beacon-demo.melosso.com
       - Beacon__AllowedOrigins=https://beacon-demo.melosso.com,https://beacon-demo-api.melosso.com
