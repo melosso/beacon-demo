@@ -1,0 +1,5 @@
+.git
+README.md
+beacon_env.sh
+beacon_demo_manager.sh
+docker-compose.yml
