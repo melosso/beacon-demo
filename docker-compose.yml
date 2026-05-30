@@ -21,7 +21,8 @@ services:
       - Beacon__SigningKey=${BEACON_SIGNING_KEY}
       - Beacon__EncryptionKey=${BEACON_ENCRYPTION_KEY}
       - Beacon__Pepper=${BEACON_PEPPER}
-      - Beacon__AdminApiKey=${BEACON_ADMIN_API_KEY}
+      #- Beacon__AdminApiKey=${BEACON_ADMIN_API_KEY}
+      - Beacon__AdminApiKey=Beacon-Api-Key
       - Beacon__ConnectionString=Data Source=/app/data/Beacon.db
       - Beacon__DisableEmailNotifications=true
       - Beacon__UserAuthentication=
