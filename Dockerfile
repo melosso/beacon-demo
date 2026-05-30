@@ -18,3 +18,4 @@ FROM ghcr.io/melosso/beacon:latest
 COPY --from=patcher /shell.html /app/wwwroot/admin/_shell.html
 COPY --from=patcher /login.html /app/wwwroot/login.html
 RUN rm -f /app/wwwroot/login.html.gz /app/wwwroot/login.html.br
+RUN mkdir -p /app/data && chown -R 1000:1000 /app/data
